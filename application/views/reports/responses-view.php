@@ -109,7 +109,8 @@
                                 <th scope="col">SQD6</th>
                                 <th scope="col">SQD7</th>
                                 <th scope="col">SQD8</th>
-
+                                <th scope="col">Suggestions</th>
+                                <th scope="col">Email</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -143,6 +144,8 @@
                                     <td><?=$reponsesRow['sqd6']?></td>
                                     <td><?=$reponsesRow['sqd7']?></td>
                                     <td><?=$reponsesRow['sqd8']?></td>
+                                    <td><?=$reponsesRow['suggestions']?></td>
+                                    <td><?=$reponsesRow['email']?></td>
                                 </tr>
                                 <?php
                             }?>
