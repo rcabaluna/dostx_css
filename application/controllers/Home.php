@@ -40,7 +40,7 @@ class Home extends CI_Controller
 
                     if ($check['usertype'] == 'admin') {
                       
-                      $path = '?servicetype=all&year=' . date('Y') . '&quarterid=' . $quarterid['quarterid'] . '&officeid=all';
+                      $path = '/reports/responses?servicetype=all&year=' . date('Y') . '&quarterid=' . $quarterid['quarterid'] . '&officeid=all';
                         redirect(BASE.$path);
                     } else {
                         $path = '?servicetype=all&year=' . date('Y') . '&quarterid=' . $quarterid['quarterid'] . '&officeid=all';
