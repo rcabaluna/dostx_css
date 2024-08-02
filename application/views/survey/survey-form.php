@@ -169,6 +169,7 @@
                                                     <label for="address"><b>Address:</b> <span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" id="address" name="address" placeholder="Enter address" required/>
                                                 </div>
+                                                <?php if ($surveytype == 'external') { ?>
                                                 <div class="form-group">
                                                     <label for="how-did-you-know-dost"><b>How did you know DOST?:</b> <span class="text-danger">*</span></label>
                                                     <div class="checkbox">
@@ -196,6 +197,7 @@
                                                         <label for="chkhdyk6">Others</label>
                                                     </div>
                                                 </div>
+                                                <?php } ?>
                                                 <?php if ($surveytype == 'external') { ?>
                                                     <button type="button" onclick="backForm(1,0)" class="btn btn-primary btn-tone m-r-5">Back</button>
                                                 <?php } ?>
@@ -206,7 +208,7 @@
                                                     INSTRUCTIONS: Select your answer to the Citizen's Charter (CC) questions. The Citizen's Charter is an official document that reflects the services of a government agency/office including its
                                                     requirements, fees, and processing times among others.
                                                 </p>
-                                                <p class="text-info" >Note: This is a pre-filled survey. You may change the answer with your answer for this survey.</p>
+                                                <p class="text-info" >Note: The survey has already an answer. Click <strong>Next</strong> if you agree with the answers. Otherwise, feel free to change by checking your desired response and click <strong>Next</strong>.</p>
 
                                                 <div class="form-group">
                                                     <label for="cc1"><b>CC1: Which of the following best describes your awareness of a CC?</b> <span class="text-danger">*</span></label>
@@ -269,7 +271,7 @@
                                             <form id="frm-step-3" method="POST" style="display:none;">
                                                 <hr>
                                                 <p class="text-dark" >INSTRUCTIONS: For SQD 0-8, please put a check mark (✔) on the column that best corresponds with your answer.</p>
-                                                <p class="text-info" >Note: This is a pre-filled survey. You may change the answer with your answer for this survey.</p>
+                                                <p class="text-info" >Note: The survey has already an answer. Click <strong>Submit</strong> if you agree with the answers. Otherwise, feel free to change by checking your desired response and click <strong>Submit</strong>.</p>
                                                 <div class="form-group">
                                                     <label for="sqd0"><b>SQD0. I am satisfied with the service that I availed.</b> <span class="text-danger">*</span></label>
                                                     <div class="radio">
@@ -390,7 +392,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sqd5"><b>SQD5. I paid a reasonable amount of fees for my transaction. (If service was free, mark the "N/A" column).</b> <span class="text-danger">*</span></label>
+                                                    <label for="sqd5"><b>SQD5. I paid a reasonable amount of fees for my transaction.</b> <span class="text-danger">*</span></label>
                                                     <div class="radio">
                                                         <input type="radio" id="sqd5_strongly_agree" name="sqd5" value="5" checked />
                                                         <label for="sqd5_strongly_agree">Strongly Agree</label>
