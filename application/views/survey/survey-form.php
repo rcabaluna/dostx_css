@@ -269,7 +269,6 @@
                                                 <button type="submit" class="btn btn-primary">Next</button>
                                             </form>
                                             <form id="frm-step-3" method="POST" style="display:none;">
-                                                <hr>
                                                 <p class="text-dark" >INSTRUCTIONS: For SQD 0-8, please put a check mark (✔) on the column that best corresponds with your answer.</p>
                                                 <p class="text-primary" >Note: The survey already contains answers. If you agree with the provided answers, simply click <strong>Submit</strong>. Otherwise, feel free to change them by selecting your desired response and click <strong>Submit</strong>.</p>
                                                 <div class="form-group">
