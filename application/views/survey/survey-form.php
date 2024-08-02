@@ -49,36 +49,38 @@
                                 <div class="card shadow-lg">
                                     <div class="card-body">
                                         
-                                        <form id="frm-step-0" method="POST">
-                                        <div class="row">
-                                                <div class="col-md-12 d-flex justify-content-center m-b-40">
-                                                    <img class="text-center w-30" src="<?=base_url('assets/images/logo/logo-big.png')?>">
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <h4 class="text-center"><b>HELP US SERVE YOU BETTER!</b></h4>
-                                                    <p class="text-dark"  style="text-align:justify;"> The <b>Client Satisfaction Measurement (CSM)</b> tracks the customer experience of government offices. Your feedback on your <u>recently concluded transaction</u> will help this office provide a better service.
-                                                        Personal Information shared will be kept confidential and you always have the option not to answer this form.
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-12 col-lg-12 m-t-20 ">
-                                                    <h5>I am transacting with:</h5>
-                                                    <div class="btn-group-vertical btn-group-toggle w-100" data-toggle="buttons">
-                                                        <?php
-                                                            foreach ($offices as $officesRow) {
+                                        <?php if ($surveytype == 'external') { ?>
+                                            <form id="frm-step-0" method="POST">
+                                                <div class="row">
+                                                        <div class="col-md-12 d-flex justify-content-center m-b-40">
+                                                            <img class="text-center w-30" src="<?=base_url('assets/images/logo/logo-big.png')?>">
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <h4 class="text-center"><b>HELP US SERVE YOU BETTER!</b></h4>
+                                                            <p class="text-dark"  style="text-align:justify;"> The <b>Client Satisfaction Measurement (CSM)</b> tracks the customer experience of government offices. Your feedback on your <u>recently concluded transaction</u> will help this office provide a better service.
+                                                                Personal Information shared will be kept confidential and you always have the option not to answer this form.
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-md-12 col-lg-12 m-t-20 ">
+                                                            <h5>I am transacting with:</h5>
+                                                            <div class="btn-group-vertical btn-group-toggle w-100" data-toggle="buttons">
+                                                                <?php
+                                                                    foreach ($offices as $officesRow) {
+                                                                        ?>
+                                                                        <label class="btn btn-primary btn-tone mb-2" onclick="enableNextButtonZero(this)">
+                                                                        <input type="radio" name="officeid" autocomplete="off" value="<?=$officesRow['officeid']?>"> <?=$officesRow['name']?>
+                                                                </label>
+                                                                        
+                                                                <?php
+                                                                    }
                                                                 ?>
-                                                                <label class="btn btn-primary btn-tone mb-2" onclick="enableNextButtonZero(this)">
-                                                                <input type="radio" name="officeid" autocomplete="off" value="<?=$officesRow['officeid']?>"> <?=$officesRow['name']?>
-                                                        </label>
-                                                                
-                                                        <?php
-                                                            }
-                                                        ?>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary" id="btnFirstNext" disabled>Next</button>
-                                        </form>
-                                        <form id="frm-step-1" method="POST" style="display: none;">
+                                                    <button type="submit" class="btn btn-primary" id="btnFirstNext" disabled>Next</button>
+                                                </form>
+                                        <?php }?>
+                                        <form id="frm-step-1" method="POST">
                                             
                                             <div class="row">
                                                 <div class="col-md-12 d-flex justify-content-center m-b-10">
@@ -194,7 +196,9 @@
                                                         <label for="chkhdyk6">Others</label>
                                                     </div>
                                                 </div>
-                                                <button type="button" onclick="backForm(1,0)" class="btn btn-primary btn-tone m-r-5">Back</button>
+                                                <?php if ($surveytype == 'external') { ?>
+                                                    <button type="button" onclick="backForm(1,0)" class="btn btn-primary btn-tone m-r-5">Back</button>
+                                                <?php } ?>
                                                 <button type="submit" class="btn btn-primary">Next</button>
                                         </form>
                                             <form id="frm-step-2" method="POST" style="display:none;">
@@ -513,6 +517,13 @@
             var officeid = '';
 
             $(document).ready(function () {
+
+                if('<?=$surveytype?>' == 'external'){
+                    $("#frm-step-1").hide();
+                }else{
+                    $("#frm-step-1").show();
+                }
+
                 $("#frm-step-0").submit(function (e) { 
                     frm0data = $("#frm-step-0").serializeArray();
                     $("#frm-step-0").hide();
@@ -523,8 +534,10 @@
                 $("#frm-step-1").submit(function (e) { 
                     frm1data = $("#frm-step-1").serializeArray();
 
-                    frm1data.push({name: "officeid", value: officeid});
-                    console.log(frm1data);
+                    if('<?=$surveytype?>' == 'external'){
+                        frm1data.push({name: "officeid", value: officeid});
+                    }
+
                     $("#frm-step-1").hide();
                     $("#frm-step-2").show();
                     e.preventDefault();

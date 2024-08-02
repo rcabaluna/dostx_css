@@ -25,7 +25,7 @@ class Survey extends CI_Controller
         if (empty($data['services']) || empty($data['clienttype']) || empty($data['offices'])) {
             // handle empty results, e.g. show an error message
         }
-
+        $data['surveytype'] = 'external';
         $this->load->view('survey/survey-form', $data);
     }
 
@@ -35,11 +35,11 @@ class Survey extends CI_Controller
             'is_active' => 1,
             'is_external' => 0
         );
-
         $data['offices'] = $this->surveyModel->get_all_data('tbloffice');
         $data['services'] = $this->surveyModel->get_services($param);
         $data['clienttype'] = $this->surveyModel->get_all_data('tblclienttype');
-
+        
+        $data['surveytype'] = 'internal';
         $this->load->view('survey/survey-form', $data);
     }
 
