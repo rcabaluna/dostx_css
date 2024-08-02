@@ -62,7 +62,7 @@
                             <select class="custom-select" id="selyear" style="min-width: 30px;">
                                 <?php 
                                 $currentYear = date('Y');
-                                $selectedYear = $_GET['year'] ?? $currentYear;
+                                $selectedYear = isset($_GET['year']) ? $_GET['year'] : $currentYear;
                                 for ($i = $currentYear - 5; $i <= $currentYear; $i++) { 
                                     $selected = ($i == $selectedYear) ? 'selected' : ''; 
                                 ?>
