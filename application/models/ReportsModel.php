@@ -90,7 +90,7 @@ class ReportsModel extends CI_Model
         if ($params['officeid'] !== 'all') {
             $this->db->where('css.officeid', $params['officeid']);
         }
-    
+        $this->db->order_by('css.date_created', 'DESC');
         // Execute the query and return the results
         $query = $this->db->get();
     
