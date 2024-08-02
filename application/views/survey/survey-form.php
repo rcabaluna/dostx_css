@@ -166,7 +166,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="address"><b>Address:</b> <span class="text-danger">*</span></label>
+                                                    <label for="address"><b>Address (City/Municipality):</b> <span class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" id="address" name="address" placeholder="Enter address" required/>
                                                 </div>
                                                 <?php if ($surveytype == 'external') { ?>
@@ -208,7 +208,7 @@
                                                     INSTRUCTIONS: Select your answer to the Citizen's Charter (CC) questions. The Citizen's Charter is an official document that reflects the services of a government agency/office including its
                                                     requirements, fees, and processing times among others.
                                                 </p>
-                                                <p class="text-primary" >Note: The survey has already an answer. Click <strong>Next</strong> if you agree with the answers. Otherwise, feel free to change by checking your desired response and click <strong>Next</strong>.</p>
+                                                <p class="text-primary" >Note: The survey already contains answers. If you agree with the provided answers, simply click <strong>Next</strong>. Otherwise, feel free to change them by selecting your desired response and click <strong>Next</strong>.</p>
 
                                                 <div class="form-group">
                                                     <label for="cc1"><b>CC1: Which of the following best describes your awareness of a CC?</b> <span class="text-danger">*</span></label>
@@ -271,7 +271,7 @@
                                             <form id="frm-step-3" method="POST" style="display:none;">
                                                 <hr>
                                                 <p class="text-dark" >INSTRUCTIONS: For SQD 0-8, please put a check mark (✔) on the column that best corresponds with your answer.</p>
-                                                <p class="text-primary" >Note: The survey has already an answer. Click <strong>Submit</strong> if you agree with the answers. Otherwise, feel free to change by checking your desired response and click <strong>Submit</strong>.</p>
+                                                <p class="text-primary" >Note: The survey already contains answers. If you agree with the provided answers, simply click <strong>Submit</strong>. Otherwise, feel free to change them by selecting your desired response and click <strong>Submit</strong>.</p>
                                                 <div class="form-group">
                                                     <label for="sqd0"><b>SQD0. I am satisfied with the service that I availed.</b> <span class="text-danger">*</span></label>
                                                     <div class="radio">
@@ -392,7 +392,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="sqd5"><b>SQD5. I paid a reasonable amount of fees for my transaction.</b> <span class="text-danger">*</span></label>
+                                                    <label for="sqd5"><b>SQD5. I paid a reasonable amount of fees for my transaction.</b></label>
                                                     <div class="radio">
                                                         <input type="radio" id="sqd5_strongly_agree" name="sqd5" value="5" checked />
                                                         <label for="sqd5_strongly_agree">Strongly Agree</label>
