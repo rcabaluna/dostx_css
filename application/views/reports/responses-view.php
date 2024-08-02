@@ -145,7 +145,7 @@
                                     <td><?=$reponsesRow['sqd7']?></td>
                                     <td><?=$reponsesRow['sqd8']?></td>
                                     <td><?=$reponsesRow['suggestions']?></td>
-                                    <td><?=$reponsesRow['email']?></td>
+                                    <td><?=$reponsesRow['sqd_email']?></td>
                                 </tr>
                                 <?php
                             }?>
