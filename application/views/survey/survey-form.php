@@ -269,6 +269,7 @@
                                             <form id="frm-step-3" method="POST" style="display:none;">
                                                 <hr>
                                                 <p class="text-dark" >INSTRUCTIONS: For SQD 0-8, please put a check mark (✔) on the column that best corresponds with your answer.</p>
+                                                <p class="text-info" >Note: This is a pre-filled survey. You may change the answer with your answer for this survey.</p>
                                                 <div class="form-group">
                                                     <label for="sqd0"><b>SQD0. I am satisfied with the service that I availed.</b> <span class="text-danger">*</span></label>
                                                     <div class="radio">
