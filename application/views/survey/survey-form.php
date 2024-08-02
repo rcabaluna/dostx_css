@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Enlink - Admin Dashboard Template</title>
+        <title>DOSTX - <?=strtoupper($surveytype)?> Survey CSS</title>
 
         <!-- Favicon -->
         <link rel="shortcut icon" href="<?=base_url('assets/images/logo/favicon.png')?>">
