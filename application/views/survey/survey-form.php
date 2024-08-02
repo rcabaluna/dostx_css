@@ -206,7 +206,7 @@
                                                     INSTRUCTIONS: Select your answer to the Citizen's Charter (CC) questions. The Citizen's Charter is an official document that reflects the services of a government agency/office including its
                                                     requirements, fees, and processing times among others.
                                                 </p>
-                                                <p class="text-dark" >Note: This is a pre-filled survey. You may change the answer with your answer for this survey.</p>
+                                                <p class="text-info" >Note: This is a pre-filled survey. You may change the answer with your answer for this survey.</p>
 
                                                 <div class="form-group">
                                                     <label for="cc1"><b>CC1: Which of the following best describes your awareness of a CC?</b> <span class="text-danger">*</span></label>
