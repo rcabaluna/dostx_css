@@ -129,7 +129,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="date"><b>Date</b>: <span class="text-danger">*</span></label>
-                                                    <input type="date" class="form-control" id="date" value="<?=date('Y-m-d')?>" required/>
+                                                    <input type="date" class="form-control" id="date" name="date" max="<?=date('Y-m-d')?>" value="<?=date('Y-m-d')?>" required/>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="sex"><b>Sex:</b> <span class="text-danger">*</span></label>
@@ -547,7 +547,6 @@
 
                 $("#frm-step-2").submit(function (e) {
                     frm2data = $("#frm-step-2").serializeArray();
-                    console.log(frm2data);
                     $("#frm-step-2").hide();
                     $("#frm-step-3").show();
                     e.preventDefault();
@@ -555,7 +554,6 @@
 
                 $("#frm-step-3").submit(function (e) {
                     frm3data = $("#frm-step-3").serializeArray();
-                    console.log(frm3data);
 
                     $.post(BASE_URL+"survey/save",{
                         form1:frm1data,
