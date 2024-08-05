@@ -6,7 +6,7 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # Remove index.php from URLs
 RewriteCond %{REQUEST_URI} ^/index\.php
-RewriteRule ^index\.php(.*)$ https://%{HTTP_HOST}/$1 [R=301,NE,L]
+RewriteRule ^index\.php(.*)$ https://%{HTTP_HOST}$1 [R=301,NE,L]
 
 # Existing rules to redirect requests to index.php internally
 RewriteCond %{REQUEST_FILENAME} !-f
