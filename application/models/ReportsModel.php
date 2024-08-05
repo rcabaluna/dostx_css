@@ -518,7 +518,7 @@ class ReportsModel extends CI_Model
 
     }
 
-    public function gen_services($params,$is_external){
+    public function gen_servicesx($params,$is_external){
         // Common Table Expressions (CTEs)
         $cssSummaryCTE = "
         SELECT csssum.servicesid, csssum.quarterid, qua.semesterid, csssum.year, sqd.sqd0
@@ -595,6 +595,60 @@ class ReportsModel extends CI_Model
 
         // Get the results
         return $query->result_array();
+    }
+
+    public function gen_services($params){
+        $query = $this->db->query("WITH css_summary AS (
+                SELECT csssum.servicesid, csssum.quarterid, qua.semesterid, csssum.year, sqd.sqd0
+                FROM tblcss_summary csssum
+                JOIN tblquarters qua ON qua.quarterid = csssum.quarterid
+                LEFT JOIN tblcss_details_sqd sqd ON sqd.csssummaryid = csssum.csssummaryid
+                WHERE csssum.year = 2024 AND qua.semesterid = 2
+                    AND csssum.quarterid = 3
+            ),
+            service_counts AS (
+                SELECT servicesid, COUNT(*) AS xcount
+                FROM css_summary
+                GROUP BY servicesid
+            ),
+            total_xcount AS (
+                SELECT COUNT(*) AS total_xcount
+                FROM css_summary css
+                JOIN tblservices serx ON serx.servicesid = css.servicesid
+                WHERE serx.is_external = 1
+            ),
+            vs_xcount AS (
+                SELECT servicesid, COUNT(*) AS vs_xcount
+                FROM css_summary
+                WHERE sqd0 >= 4
+                GROUP BY servicesid
+            ),
+            xx_value AS (
+                SELECT servicesid, ROUND(IFNULL(SUM(sqd0) / NULLIF(COUNT(*), 0), 0) * 20, 1) AS xx
+                FROM css_summary
+                GROUP BY servicesid
+            )
+
+            -- Main Query
+            SELECT 
+                ser.servicesid,
+                ser.name,
+                ser.unit,
+                ser.is_cc,
+                COALESCE(sc.xcount, 0) AS xcount,
+                tc.total_xcount,
+                ROUND(COALESCE(sc.xcount, 0) / NULLIF(tc.total_xcount, 0) * 100, 1) AS percentx,
+                COALESCE(vc.vs_xcount, 0) AS vs_xcount,
+                COALESCE(xx.xx, 0) AS xx
+            FROM tblservices ser
+            LEFT JOIN service_counts sc ON ser.servicesid = sc.servicesid
+            LEFT JOIN total_xcount tc ON 1=1
+            LEFT JOIN vs_xcount vc ON ser.servicesid = vc.servicesid
+            LEFT JOIN xx_value xx ON ser.servicesid = xx.servicesid
+            WHERE ser.is_external = 1 AND ser.is_active = 1;
+");
+
+return $query->result_array();
     }
 
 }
