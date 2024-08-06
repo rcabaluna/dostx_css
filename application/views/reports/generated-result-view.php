@@ -16,25 +16,36 @@
                         <?php
                             foreach ($clienttype as $clienttypeRow) { ?>
                                 <tr>
-                                    <td><?= $clienttypeRow['name'] ?? '' ?></td>
-                                    <td class="text-center"><?= ($clienttypeRow['external_count'] ?? 0) . ' <small>(' . 
-                                            (($ctype_total_external ?? 0) != 0 
-                                                ? round((($clienttypeRow['external_count'] ?? 0) / $ctype_total_external) * 100,1) 
-                                                : 0) . '%)</small>' ?>
-                                    </td>
-                                    <td class="text-center"><?= ($clienttypeRow['internal_count'] ?? 0) . ' <small>(' . 
-                                            (($ctype_total_internal ?? 0) != 0 
-                                                ? round((($clienttypeRow['internal_count'] ?? 0) / $ctype_total_internal) * 100,1) 
-                                                : 0) . '%)</small>' ?>
+                                    <td><?= isset($clienttypeRow['name']) ? $clienttypeRow['name'] : '' ?></td>
+                                    <td class="text-center">
+                                        <?= isset($clienttypeRow['external_count']) ? $clienttypeRow['external_count'] : 0 ?> 
+                                        <small>(
+                                            <?= ($ctype_total_external ?? 0) != 0 
+                                                ? round(($clienttypeRow['external_count'] ?? 0) / $ctype_total_external * 100, 1) 
+                                                : 0 
+                                            ?>%
+                                        </small>
                                     </td>
                                     <td class="text-center">
-                                        
-                                        <?= ($clienttypeRow['external_count'] + $clienttypeRow['internal_count']) . ' <small>(' . 
-                                            (($clienttypeRow['total_overall'] ?? 0) != 0 
-                                                ? round(($clienttypeRow['total_per_ctype'] / $clienttypeRow['total_overall']) * 100,1) 
-                                                : 0) . '%)</small>' ?>
+                                        <?= isset($clienttypeRow['internal_count']) ? $clienttypeRow['internal_count'] : 0 ?> 
+                                        <small>(
+                                            <?= ($ctype_total_internal ?? 0) != 0 
+                                                ? round(($clienttypeRow['internal_count'] ?? 0) / $ctype_total_internal * 100, 1) 
+                                                : 0 
+                                            ?>%
+                                        </small>
+                                    </td>
+                                    <td class="text-center">
+                                        <?= ($clienttypeRow['external_count'] ?? 0) + ($clienttypeRow['internal_count'] ?? 0) ?> 
+                                        <small>(
+                                            <?= ($clienttypeRow['total_overall'] ?? 0) != 0 
+                                                ? round(($clienttypeRow['total_per_ctype'] ?? 0) / $clienttypeRow['total_overall'] * 100, 1) 
+                                                : 0 
+                                            ?>%
+                                        </small>
                                     </td>
                                 </tr>
+
                                 <?php
                             }
                         ?>
