@@ -66,30 +66,49 @@ Office: <?=$officename['name']?> <br>
                 <td colspan="4"><b>Client Type</b></td>
             </tr>
             <?php
-                foreach ($clienttype as $clienttypeRow) { ?>
-                    <tr>
-                        <td><?= $clienttypeRow['name'] ?? '' ?></td>
-                        <td class="text-center"><?= ($clienttypeRow['external_count'] ?? 0) . ' <small>(' . 
-                                (($ctype_total_external ?? 0) != 0 
-                                    ? round((($clienttypeRow['external_count'] ?? 0) / $ctype_total_external) * 100,1) 
-                                    : 0) . '%)</small>' ?>
-                        </td>
-                        <td class="text-center"><?= ($clienttypeRow['internal_count'] ?? 0) . ' <small>(' . 
-                                (($ctype_total_internal ?? 0) != 0 
-                                    ? round((($clienttypeRow['internal_count'] ?? 0) / $ctype_total_internal) * 100,1) 
-                                    : 0) . '%)</small>' ?>
-                        </td>
-                        <td class="text-center">
-                            
-                            <?= ($clienttypeRow['external_count'] + $clienttypeRow['internal_count']) . ' <small>(' . 
-                                (($clienttypeRow['total_overall'] ?? 0) != 0 
-                                    ? round(($clienttypeRow['total_per_ctype'] / $clienttypeRow['total_overall']) * 100,1) 
-                                    : 0) . '%)</small>' ?>
-                        </td>
-                    </tr>
-                    <?php
-                }
-            ?>
+                            foreach ($clienttype as $clienttypeRow) { ?>
+                                <tr>
+                                    <td>
+                                        <?php echo isset($clienttypeRow['name']) ? $clienttypeRow['name'] : ''; ?>
+                                    </td>
+                                    <td class="text-center">
+                                        <?php
+                                        $externalCount = isset($clienttypeRow['external_count']) ? $clienttypeRow['external_count'] : 0;
+                                        $ctypeTotalExternal = isset($ctype_total_external) ? $ctype_total_external : 0;
+                                        $percentExternal = $ctypeTotalExternal != 0 
+                                            ? round(($externalCount / $ctypeTotalExternal) * 100, 1) 
+                                            : 0;
+                                        echo $externalCount . ' <small>(' . $percentExternal . '%)</small>';
+                                        ?>
+                                    </td>
+                                    <td class="text-center">
+                                        <?php
+                                        $internalCount = isset($clienttypeRow['internal_count']) ? $clienttypeRow['internal_count'] : 0;
+                                        $ctypeTotalInternal = isset($ctype_total_internal) ? $ctype_total_internal : 0;
+                                        $percentInternal = $ctypeTotalInternal != 0 
+                                            ? round(($internalCount / $ctypeTotalInternal) * 100, 1) 
+                                            : 0;
+                                        echo $internalCount . ' <small>(' . $percentInternal . '%)</small>';
+                                        ?>
+                                    </td>
+                                    <td class="text-center">
+                                        <?php
+                                        $externalCount = isset($clienttypeRow['external_count']) ? $clienttypeRow['external_count'] : 0;
+                                        $internalCount = isset($clienttypeRow['internal_count']) ? $clienttypeRow['internal_count'] : 0;
+                                        $totalOverall = isset($clienttypeRow['total_overall']) ? $clienttypeRow['total_overall'] : 0;
+                                        $totalPerCtype = isset($clienttypeRow['total_per_ctype']) ? $clienttypeRow['total_per_ctype'] : 0;
+                                        $totalCount = $externalCount + $internalCount;
+                                        $percentOverall = $totalOverall != 0 
+                                            ? round(($totalPerCtype / $totalOverall) * 100, 1) 
+                                            : 0;
+                                        echo $totalCount . ' <small>(' . $percentOverall . '%)</small>';
+                                        ?>
+                                    </td>
+                                </tr>
+
+                                <?php
+                            }
+                        ?>
             <tr>
                 <td colspan="4">&nbsp;</td>
             </tr>
@@ -121,99 +140,141 @@ Office: <?=$officename['name']?> <br>
             </td>
         </tr>
         <tr>
-            <td>20-34</td>
-            <td class="text-center">
-                            <?= ($age_distribution['external_20_34'] ?? 0) . ' <small>(' . 
-                                (($age_distribution['total_external_count'] ?? 0) != 0 
-                                    ? round((($age_distribution['external_20_34'] ?? 0) / $age_distribution['total_external_count']) * 100,1) 
-                                    : 0) . '%)</small>' ?>
-                        </td>
-            <td class="text-center">
-                            <?= ($age_distribution['internal_20_34'] ?? 0) . ' <small>(' . 
-                                (($age_distribution['total_internal_count'] ?? 0) != 0 
-                                    ? round((($age_distribution['internal_20_34'] ?? 0) / $age_distribution['total_internal_count']) * 100,1) 
-                                    : 0) . '%)</small>' ?>
-                        </td>
-                        <td class="text-center">
-                    <?= 
-                        ($age_distribution['total_20_34'] ?? 0) . 
-                        ' <small>(' . 
-                        (($age_distribution['all_total'] ?? 0) != 0 
-                            ? round(($age_distribution['total_20_34'] ?? 0) / $age_distribution['all_total'] * 100, 1) 
-                            : 0) . '%)</small>' 
-                    ?>
-            </td>
-        </tr>
-        <tr>
-            <td>35-49</td>
-            <td class="text-center">
-                            <?= ($age_distribution['external_35_49'] ?? 0) . ' <small>(' . 
-                                (($age_distribution['total_external_count'] ?? 0) != 0 
-                                    ? round((($age_distribution['external_35_49'] ?? 0) / $age_distribution['total_external_count']) * 100,1) 
-                                    : 0) . '%)</small>' ?>
-                        </td>
-            <td class="text-center">
-                            <?= ($age_distribution['internal_35_49'] ?? 0) . ' <small>(' . 
-                                (($age_distribution['total_internal_count'] ?? 0) != 0 
-                                    ? round((($age_distribution['internal_35_49'] ?? 0) / $age_distribution['total_internal_count']) * 100,1) 
-                                    : 0) . '%)</small>' ?>
-                        </td>
-                        <td class="text-center">
-                        <?= 
-                        ($age_distribution['total_35_49'] ?? 0) . 
-                        ' <small>(' . 
-                        (($age_distribution['all_total'] ?? 0) != 0 
-                            ? round(($age_distribution['total_35_49'] ?? 0) / $age_distribution['all_total'] * 100, 1) 
-                            : 0) . '%)</small>' 
-                    ?>
-                        </td>
-        </tr>
-        <tr>
-            <td>50-64</td>
-            <td class="text-center">
-                            <?= ($age_distribution['external_50_64'] ?? 0) . ' <small>(' . 
-                                (($age_distribution['total_external_count'] ?? 0) != 0 
-                                    ? round((($age_distribution['external_50_64'] ?? 0) / $age_distribution['total_external_count']) * 100,1) 
-                                    : 0) . '%)</small>' ?>
-                        </td>
-            <td class="text-center">
-                            <?= ($age_distribution['internal_50_64'] ?? 0) . ' <small>(' . 
-                                (($age_distribution['total_internal_count'] ?? 0) != 0 
-                                    ? round((($age_distribution['internal_50_64'] ?? 0) / $age_distribution['total_internal_count']) * 100,1) 
-                                    : 0) . '%)</small>' ?>
-                        </td>
-                        <td class="text-center"><?= 
-                        ($age_distribution['total_50_64'] ?? 0) . 
-                        ' <small>(' . 
-                        (($age_distribution['all_total'] ?? 0) != 0 
-                            ? round(($age_distribution['total_50_64'] ?? 0) / $age_distribution['all_total'] * 100, 1) 
-                            : 0) . '%)</small>' 
-                    ?></td>
-        </tr>
-        <tr>
-            <td>65 or higher</td>
-            <td class="text-center">
-                            <?= ($age_distribution['external_65_or_higher'] ?? 0) . ' <small>(' . 
-                                (($age_distribution['total_external_count'] ?? 0) != 0 
-                                    ? round((($age_distribution['external_65_or_higher'] ?? 0) / $age_distribution['total_external_count']) * 100,1) 
-                                    : 0) . '%)</small>' ?>
-                        </td>
-            <td class="text-center">
-                            <?= ($age_distribution['internal_65_or_higher'] ?? 0) . ' <small>(' . 
-                                (($age_distribution['total_internal_count'] ?? 0) != 0 
-                                    ? round((($age_distribution['internal_65_or_higher'] ?? 0) / $age_distribution['total_internal_count']) * 100,1) 
-                                    : 0) . '%)</small>' ?>
-                        </td>
-                        <td class="text-center">
-                        <?= 
-                        ($age_distribution['total_65_or_higher'] ?? 0) . 
-                        ' <small>(' . 
-                        (($age_distribution['all_total'] ?? 0) != 0 
-                            ? round(($age_distribution['total_65_or_higher'] ?? 0) / $age_distribution['all_total'] * 100, 1) 
-                            : 0) . '%)</small>' 
-                    ?>
-                        </td>
-        </tr>
+    <td>19 or lower</td>
+    <td class="text-center">
+        <?php
+        $external_19_or_lower = isset($age_distribution['external_19_or_lower']) ? $age_distribution['external_19_or_lower'] : 0;
+        $total_external_count = isset($age_distribution['total_external_count']) ? $age_distribution['total_external_count'] : 0;
+        $percent_external = $total_external_count != 0 ? round(($external_19_or_lower / $total_external_count) * 100, 1) : 0;
+        echo $external_19_or_lower . ' <small>(' . $percent_external . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $internal_19_or_lower = isset($age_distribution['internal_19_or_lower']) ? $age_distribution['internal_19_or_lower'] : 0;
+        $total_internal_count = isset($age_distribution['total_internal_count']) ? $age_distribution['total_internal_count'] : 0;
+        $percent_internal = $total_internal_count != 0 ? round(($internal_19_or_lower / $total_internal_count) * 100, 1) : 0;
+        echo $internal_19_or_lower . ' <small>(' . $percent_internal . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $total_19_or_lower = isset($age_distribution['total_19_or_lower']) ? $age_distribution['total_19_or_lower'] : 0;
+        $all_total = isset($age_distribution['all_total']) ? $age_distribution['all_total'] : 0;
+        $percent_overall = $all_total != 0 ? round(($total_19_or_lower / $all_total) * 100, 1) : 0;
+        echo $total_19_or_lower . ' <small>(' . $percent_overall . '%)</small>';
+        ?>
+    </td>
+</tr>
+<tr>
+    <td>20-34</td>
+    <td class="text-center">
+        <?php
+        $external_20_34 = isset($age_distribution['external_20_34']) ? $age_distribution['external_20_34'] : 0;
+        $total_external_count = isset($age_distribution['total_external_count']) ? $age_distribution['total_external_count'] : 0;
+        $percent_external = $total_external_count != 0 ? round(($external_20_34 / $total_external_count) * 100, 1) : 0;
+        echo $external_20_34 . ' <small>(' . $percent_external . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $internal_20_34 = isset($age_distribution['internal_20_34']) ? $age_distribution['internal_20_34'] : 0;
+        $total_internal_count = isset($age_distribution['total_internal_count']) ? $age_distribution['total_internal_count'] : 0;
+        $percent_internal = $total_internal_count != 0 ? round(($internal_20_34 / $total_internal_count) * 100, 1) : 0;
+        echo $internal_20_34 . ' <small>(' . $percent_internal . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $total_20_34 = isset($age_distribution['total_20_34']) ? $age_distribution['total_20_34'] : 0;
+        $all_total = isset($age_distribution['all_total']) ? $age_distribution['all_total'] : 0;
+        $percent_overall = $all_total != 0 ? round(($total_20_34 / $all_total) * 100, 1) : 0;
+        echo $total_20_34 . ' <small>(' . $percent_overall . '%)</small>';
+        ?>
+    </td>
+</tr>
+<tr>
+    <td>35-49</td>
+    <td class="text-center">
+        <?php
+        $external_35_49 = isset($age_distribution['external_35_49']) ? $age_distribution['external_35_49'] : 0;
+        $total_external_count = isset($age_distribution['total_external_count']) ? $age_distribution['total_external_count'] : 0;
+        $percent_external = $total_external_count != 0 ? round(($external_35_49 / $total_external_count) * 100, 1) : 0;
+        echo $external_35_49 . ' <small>(' . $percent_external . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $internal_35_49 = isset($age_distribution['internal_35_49']) ? $age_distribution['internal_35_49'] : 0;
+        $total_internal_count = isset($age_distribution['total_internal_count']) ? $age_distribution['total_internal_count'] : 0;
+        $percent_internal = $total_internal_count != 0 ? round(($internal_35_49 / $total_internal_count) * 100, 1) : 0;
+        echo $internal_35_49 . ' <small>(' . $percent_internal . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $total_35_49 = isset($age_distribution['total_35_49']) ? $age_distribution['total_35_49'] : 0;
+        $all_total = isset($age_distribution['all_total']) ? $age_distribution['all_total'] : 0;
+        $percent_overall = $all_total != 0 ? round(($total_35_49 / $all_total) * 100, 1) : 0;
+        echo $total_35_49 . ' <small>(' . $percent_overall . '%)</small>';
+        ?>
+    </td>
+</tr>
+<tr>
+    <td>50-64</td>
+    <td class="text-center">
+        <?php
+        $external_50_64 = isset($age_distribution['external_50_64']) ? $age_distribution['external_50_64'] : 0;
+        $total_external_count = isset($age_distribution['total_external_count']) ? $age_distribution['total_external_count'] : 0;
+        $percent_external = $total_external_count != 0 ? round(($external_50_64 / $total_external_count) * 100, 1) : 0;
+        echo $external_50_64 . ' <small>(' . $percent_external . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $internal_50_64 = isset($age_distribution['internal_50_64']) ? $age_distribution['internal_50_64'] : 0;
+        $total_internal_count = isset($age_distribution['total_internal_count']) ? $age_distribution['total_internal_count'] : 0;
+        $percent_internal = $total_internal_count != 0 ? round(($internal_50_64 / $total_internal_count) * 100, 1) : 0;
+        echo $internal_50_64 . ' <small>(' . $percent_internal . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $total_50_64 = isset($age_distribution['total_50_64']) ? $age_distribution['total_50_64'] : 0;
+        $all_total = isset($age_distribution['all_total']) ? $age_distribution['all_total'] : 0;
+        $percent_overall = $all_total != 0 ? round(($total_50_64 / $all_total) * 100, 1) : 0;
+        echo $total_50_64 . ' <small>(' . $percent_overall . '%)</small>';
+        ?>
+    </td>
+</tr>
+<tr>
+    <td>65 or higher</td>
+    <td class="text-center">
+        <?php
+        $external_65_or_higher = isset($age_distribution['external_65_or_higher']) ? $age_distribution['external_65_or_higher'] : 0;
+        $total_external_count = isset($age_distribution['total_external_count']) ? $age_distribution['total_external_count'] : 0;
+        $percent_external = $total_external_count != 0 ? round(($external_65_or_higher / $total_external_count) * 100, 1) : 0;
+        echo $external_65_or_higher . ' <small>(' . $percent_external . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $internal_65_or_higher = isset($age_distribution['internal_65_or_higher']) ? $age_distribution['internal_65_or_higher'] : 0;
+        $total_internal_count = isset($age_distribution['total_internal_count']) ? $age_distribution['total_internal_count'] : 0;
+        $percent_internal = $total_internal_count != 0 ? round(($internal_65_or_higher / $total_internal_count) * 100, 1) : 0;
+        echo $internal_65_or_higher . ' <small>(' . $percent_internal . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $total_65_or_higher = isset($age_distribution['total_65_or_higher']) ? $age_distribution['total_65_or_higher'] : 0;
+        $all_total = isset($age_distribution['all_total']) ? $age_distribution['all_total'] : 0;
+        $percent_overall = $all_total != 0 ? round(($total_65_or_higher / $all_total) * 100, 1) : 0;
+        echo $total_65_or_higher . ' <small>(' . $percent_overall . '%)</small>';
+        ?>
+    </td>
+</tr>
+
         <tr>
             <td colspan="4">&nbsp;</td>
         </tr>
@@ -221,110 +282,140 @@ Office: <?=$officename['name']?> <br>
             <td colspan="4"><b>Vulnerable Sector Served</b></td>
         </tr>
         <tr>
-            <td>Senior Citizen</td>
-            <td class="text-center">
-                <?= ($vulsector['Senior_Citizen_External_Count'] ?? 0) . ' <small>(' . 
-                    (($vulsector['external_total'] ?? 0) != 0 
-                        ? round((($vulsector['Senior_Citizen_External_Count'] ?? 0) / $vulsector['external_total']) * 100,1) 
-                        : 0) . '%)</small>' ?>
-            </td>
-            <td class="text-center">
-                <?= ($vulsector['Senior_Citizen_Internal_Count'] ?? 0) . ' <small>(' . 
-                    (($vulsector['internal_total'] ?? 0) != 0 
-                        ? round((($vulsector['Senior_Citizen_Internal_Count'] ?? 0) / $vulsector['internal_total']) * 100,1) 
-                        : 0) . '%)</small>' ?>
-            </td>
-            <td class="text-center">
-                <?= ($vulsector['Senior_Citizen_Total_Count'] ?? 0) . ' <small>(' . 
-                    (($vulsector['overall_total'] ?? 0) != 0 
-                        ? round((($vulsector['Senior_Citizen_Total_Count'] ?? 0) / $vulsector['overall_total']) * 100,1) 
-                        : 0) . '%)</small>' ?>
-            </td>
-        </tr>
-        <tr>
-            <td>Persons with Disabilities</td>
-            <td class="text-center">
-                <?= ($vulsector['PWD_External_Count'] ?? 0) . ' <small>(' . 
-                    (($vulsector['external_total'] ?? 0) != 0 
-                        ? round((($vulsector['PWD_External_Count'] ?? 0) / $vulsector['external_total']) * 100,1) 
-                        : 0) . '%)</small>' ?>
-            </td>
-            <td class="text-center">
-                <?= ($vulsector['PWD_Internal_Count'] ?? 0) . ' <small>(' . 
-                    (($vulsector['internal_total'] ?? 0) != 0 
-                        ? round((($vulsector['PWD_Internal_Count'] ?? 0) / $vulsector['internal_total']) * 100,1) 
-                        : 0) . '%)</small>' ?>
-            </td>
-            <td class="text-center">
-                <?= ($vulsector['PWD_Total_Count'] ?? 0) . ' <small>(' . 
-                    (($vulsector['overall_total'] ?? 0) != 0 
-                        ? round((($vulsector['PWD_Total_Count'] ?? 0) / $vulsector['overall_total']) * 100,1) 
-                        : 0) . '%)</small>' ?>
-            </td>
-        </tr>
-        <tr>
-            <td>4Ps Beneficiaries</td>
-            <td class="text-center">
-                <?= ($vulsector['4Ps_Beneficiaries_External_Count'] ?? 0) . ' <small>(' . 
-                    (($vulsector['external_total'] ?? 0) != 0 
-                        ? round((($vulsector['4Ps_Beneficiaries_External_Count'] ?? 0) / $vulsector['external_total']) * 100,1) 
-                        : 0) . '%)</small>' ?>
-            </td>
-            <td class="text-center">
-                <?= ($vulsector['4Ps_Beneficiaries_Internal_Count'] ?? 0) . ' <small>(' . 
-                    (($vulsector['internal_total'] ?? 0) != 0 
-                        ? round((($vulsector['4Ps_Beneficiaries_Internal_Count'] ?? 0) / $vulsector['internal_total']) * 100,1) 
-                        : 0) . '%)</small>' ?>
-            </td>
-            <td class="text-center">
-                <?= ($vulsector['4Ps_Beneficiaries_Total_Count'] ?? 0) . ' <small>(' . 
-                    (($vulsector['overall_total'] ?? 0) != 0 
-                        ? round((($vulsector['4Ps_Beneficiaries_Total_Count'] ?? 0) / $vulsector['overall_total']) * 100,1) 
-                        : 0) . '%)</small>' ?>
-            </td>
-        </tr>
-        <tr>
-            <td>Indigenous People</td>
-            <td class="text-center">
-                <?= ($vulsector['Indigenous_People_External_Count'] ?? 0) . ' <small>(' . 
-                    (($vulsector['external_total'] ?? 0) != 0 
-                        ? round((($vulsector['Indigenous_People_External_Count'] ?? 0) / $vulsector['external_total']) * 100,1) 
-                        : 0) . '%)</small>' ?>
-            </td>
-            <td class="text-center">
-                <?= ($vulsector['Indigenous_People_Internal_Count'] ?? 0) . ' <small>(' . 
-                    (($vulsector['internal_total'] ?? 0) != 0 
-                        ? round((($vulsector['Indigenous_People_Internal_Count'] ?? 0) / $vulsector['internal_total']) * 100,1) 
-                        : 0) . '%)</small>' ?>
-            </td>
-            <td class="text-center">
-                <?= ($vulsector['Indigenous_People_Total_Count'] ?? 0) . ' <small>(' . 
-                    (($vulsector['overall_total'] ?? 0) != 0 
-                        ? round((($vulsector['Indigenous_People_Total_Count'] ?? 0) / $vulsector['overall_total']) * 100,1) 
-                        : 0) . '%)</small>' ?>
-            </td>
-        </tr>
-        <tr>
-            <td>Did Not Specify</td>
-            <td class="text-center">
-                <?= ($vulsector['NA_External'] ?? 0) . ' <small>(' . 
-                    (($vulsector['external_total'] ?? 0) != 0 
-                        ? round((($vulsector['NA_External'] ?? 0) / $vulsector['external_total']) * 100,1) 
-                        : 0) . '%)</small>' ?>
-            </td>
-            <td class="text-center">
-                <?= ($vulsector['NA_Internal'] ?? 0) . ' <small>(' . 
-                    (($vulsector['internal_total'] ?? 0) != 0 
-                        ? round((($vulsector['NA_Internal'] ?? 0) / $vulsector['internal_total']) * 100,1) 
-                        : 0) . '%)</small>' ?>
-            </td>
-            <td class="text-center">
-                <?= ($vulsector['NA_Total'] ?? 0) . ' <small>(' . 
-                    (($vulsector['overall_total'] ?? 0) != 0 
-                        ? round((($vulsector['NA_Total'] ?? 0) / $vulsector['overall_total']) * 100,1) 
-                        : 0) . '%)</small>' ?>
-            </td>
-        </tr>
+    <td>Senior Citizen</td>
+    <td class="text-center">
+        <?php
+        $senior_citizen_external_count = isset($vulsector['Senior_Citizen_External_Count']) ? $vulsector['Senior_Citizen_External_Count'] : 0;
+        $external_total = isset($vulsector['external_total']) ? $vulsector['external_total'] : 0;
+        $percent_external = $external_total != 0 ? round(($senior_citizen_external_count / $external_total) * 100, 1) : 0;
+        echo $senior_citizen_external_count . ' <small>(' . $percent_external . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $senior_citizen_internal_count = isset($vulsector['Senior_Citizen_Internal_Count']) ? $vulsector['Senior_Citizen_Internal_Count'] : 0;
+        $internal_total = isset($vulsector['internal_total']) ? $vulsector['internal_total'] : 0;
+        $percent_internal = $internal_total != 0 ? round(($senior_citizen_internal_count / $internal_total) * 100, 1) : 0;
+        echo $senior_citizen_internal_count . ' <small>(' . $percent_internal . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $senior_citizen_total_count = isset($vulsector['Senior_Citizen_Total_Count']) ? $vulsector['Senior_Citizen_Total_Count'] : 0;
+        $overall_total = isset($vulsector['overall_total']) ? $vulsector['overall_total'] : 0;
+        $percent_overall = $overall_total != 0 ? round(($senior_citizen_total_count / $overall_total) * 100, 1) : 0;
+        echo $senior_citizen_total_count . ' <small>(' . $percent_overall . '%)</small>';
+        ?>
+    </td>
+</tr>
+<tr>
+    <td>Persons with Disabilities</td>
+    <td class="text-center">
+        <?php
+        $pwd_external_count = isset($vulsector['PWD_External_Count']) ? $vulsector['PWD_External_Count'] : 0;
+        $external_total = isset($vulsector['external_total']) ? $vulsector['external_total'] : 0;
+        $percent_external = $external_total != 0 ? round(($pwd_external_count / $external_total) * 100, 1) : 0;
+        echo $pwd_external_count . ' <small>(' . $percent_external . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $pwd_internal_count = isset($vulsector['PWD_Internal_Count']) ? $vulsector['PWD_Internal_Count'] : 0;
+        $internal_total = isset($vulsector['internal_total']) ? $vulsector['internal_total'] : 0;
+        $percent_internal = $internal_total != 0 ? round(($pwd_internal_count / $internal_total) * 100, 1) : 0;
+        echo $pwd_internal_count . ' <small>(' . $percent_internal . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $pwd_total_count = isset($vulsector['PWD_Total_Count']) ? $vulsector['PWD_Total_Count'] : 0;
+        $overall_total = isset($vulsector['overall_total']) ? $vulsector['overall_total'] : 0;
+        $percent_overall = $overall_total != 0 ? round(($pwd_total_count / $overall_total) * 100, 1) : 0;
+        echo $pwd_total_count . ' <small>(' . $percent_overall . '%)</small>';
+        ?>
+    </td>
+</tr>
+<tr>
+    <td>4Ps Beneficiaries</td>
+    <td class="text-center">
+        <?php
+        $beneficiaries_external_count = isset($vulsector['4Ps_Beneficiaries_External_Count']) ? $vulsector['4Ps_Beneficiaries_External_Count'] : 0;
+        $external_total = isset($vulsector['external_total']) ? $vulsector['external_total'] : 0;
+        $percent_external = $external_total != 0 ? round(($beneficiaries_external_count / $external_total) * 100, 1) : 0;
+        echo $beneficiaries_external_count . ' <small>(' . $percent_external . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $beneficiaries_internal_count = isset($vulsector['4Ps_Beneficiaries_Internal_Count']) ? $vulsector['4Ps_Beneficiaries_Internal_Count'] : 0;
+        $internal_total = isset($vulsector['internal_total']) ? $vulsector['internal_total'] : 0;
+        $percent_internal = $internal_total != 0 ? round(($beneficiaries_internal_count / $internal_total) * 100, 1) : 0;
+        echo $beneficiaries_internal_count . ' <small>(' . $percent_internal . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $beneficiaries_total_count = isset($vulsector['4Ps_Beneficiaries_Total_Count']) ? $vulsector['4Ps_Beneficiaries_Total_Count'] : 0;
+        $overall_total = isset($vulsector['overall_total']) ? $vulsector['overall_total'] : 0;
+        $percent_overall = $overall_total != 0 ? round(($beneficiaries_total_count / $overall_total) * 100, 1) : 0;
+        echo $beneficiaries_total_count . ' <small>(' . $percent_overall . '%)</small>';
+        ?>
+    </td>
+</tr>
+<tr>
+    <td>Indigenous People</td>
+    <td class="text-center">
+        <?php
+        $indigenous_external_count = isset($vulsector['Indigenous_People_External_Count']) ? $vulsector['Indigenous_People_External_Count'] : 0;
+        $external_total = isset($vulsector['external_total']) ? $vulsector['external_total'] : 0;
+        $percent_external = $external_total != 0 ? round(($indigenous_external_count / $external_total) * 100, 1) : 0;
+        echo $indigenous_external_count . ' <small>(' . $percent_external . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $indigenous_internal_count = isset($vulsector['Indigenous_People_Internal_Count']) ? $vulsector['Indigenous_People_Internal_Count'] : 0;
+        $internal_total = isset($vulsector['internal_total']) ? $vulsector['internal_total'] : 0;
+        $percent_internal = $internal_total != 0 ? round(($indigenous_internal_count / $internal_total) * 100, 1) : 0;
+        echo $indigenous_internal_count . ' <small>(' . $percent_internal . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $indigenous_total_count = isset($vulsector['Indigenous_People_Total_Count']) ? $vulsector['Indigenous_People_Total_Count'] : 0;
+        $overall_total = isset($vulsector['overall_total']) ? $vulsector['overall_total'] : 0;
+        $percent_overall = $overall_total != 0 ? round(($indigenous_total_count / $overall_total) * 100, 1) : 0;
+        echo $indigenous_total_count . ' <small>(' . $percent_overall . '%)</small>';
+        ?>
+    </td>
+</tr>
+<tr>
+    <td>Did Not Specify</td>
+    <td class="text-center">
+        <?php
+        $na_external = isset($vulsector['NA_External']) ? $vulsector['NA_External'] : 0;
+        $external_total = isset($vulsector['external_total']) ? $vulsector['external_total'] : 0;
+        $percent_external = $external_total != 0 ? round(($na_external / $external_total) * 100, 1) : 0;
+        echo $na_external . ' <small>(' . $percent_external . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $na_internal = isset($vulsector['NA_Internal']) ? $vulsector['NA_Internal'] : 0;
+        $internal_total = isset($vulsector['internal_total']) ? $vulsector['internal_total'] : 0;
+        $percent_internal = $internal_total != 0 ? round(($na_internal / $internal_total) * 100, 1) : 0;
+        echo $na_internal . ' <small>(' . $percent_internal . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $na_total = isset($vulsector['NA_Total']) ? $vulsector['NA_Total'] : 0;
+        $overall_total = isset($vulsector['overall_total']) ? $vulsector['overall_total'] : 0;
+        $percent_overall = $overall_total != 0 ? round(($na_total / $overall_total) * 100, 1) : 0;
+        echo $na_total . ' <small>(' . $percent_overall . '%)</small>';
+        ?>
+    </td>
+</tr>
         <tr>
             <td colspan="4">&nbsp;</td>
         </tr>
@@ -332,42 +423,59 @@ Office: <?=$officename['name']?> <br>
             <td colspan="4"><b>Sex</b></td>
         </tr>
         <tr>
-            <td>Male</td>
-            <td class="text-center"><?=($sex['external_male'] ?? 0) . ' <small>(' . 
-                                (($sex['total_external'] ?? 0) != 0 
-                                    ? round((($sex['external_male'] ?? 0) / $sex['total_external']) * 100,1) 
-                                    : 0) . '%)</small>' ?></td>
-            <td class="text-center"><?=($sex['internal_male'] ?? 0) . ' <small>(' . 
-                                (($sex['total_internal'] ?? 0) != 0 
-                                    ? round((($sex['internal_male'] ?? 0) / $sex['total_internal']) * 100,1) 
-                                    : 0) . '%)</small>' ?></td>
-            <td class="text-center"> <?= 
-                        ($sex['total_male'] ?? 0) . 
-                        ' <small>(' . 
-                        (($sex['all_total'] ?? 0) != 0 
-                            ? round(($sex['total_male'] ?? 0) / $sex['all_total'] * 100, 1) 
-                            : 0) . '%)</small>' 
-                    ?></td>
-        </tr>
-        </tr>
-        <tr>
-            <td>Female</td>
-            <td class="text-center"><?=($sex['external_female'] ?? 0) . ' <small>(' . 
-                                (($sex['total_external'] ?? 0) != 0 
-                                    ? round((($sex['external_female'] ?? 0) / $sex['total_external']) * 100,1) 
-                                    : 0) . '%)</small>' ?></td>
-            <td class="text-center"><?=($sex['internal_female'] ?? 0) . ' <small>(' . 
-                                (($sex['total_internal'] ?? 0) != 0 
-                                    ? round((($sex['internal_female'] ?? 0) / $sex['total_internal']) * 100,1) 
-                                    : 0) . '%)</small>' ?></td>
-            <td class="text-center"> <?= 
-                        ($sex['total_female'] ?? 0) . 
-                        ' <small>(' . 
-                        (($sex['all_total'] ?? 0) != 0 
-                            ? round(($sex['total_female'] ?? 0) / $sex['all_total'] * 100, 1) 
-                            : 0) . '%)</small>' 
-                    ?></td>
-        </tr>
+    <td>Male</td>
+    <td class="text-center">
+        <?php
+        $external_male = isset($sex['external_male']) ? $sex['external_male'] : 0;
+        $total_external = isset($sex['total_external']) ? $sex['total_external'] : 0;
+        $percent_external = $total_external != 0 ? round(($external_male / $total_external) * 100, 1) : 0;
+        echo $external_male . ' <small>(' . $percent_external . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $internal_male = isset($sex['internal_male']) ? $sex['internal_male'] : 0;
+        $total_internal = isset($sex['total_internal']) ? $sex['total_internal'] : 0;
+        $percent_internal = $total_internal != 0 ? round(($internal_male / $total_internal) * 100, 1) : 0;
+        echo $internal_male . ' <small>(' . $percent_internal . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $total_male = isset($sex['total_male']) ? $sex['total_male'] : 0;
+        $all_total = isset($sex['all_total']) ? $sex['all_total'] : 0;
+        $percent_all = $all_total != 0 ? round(($total_male / $all_total) * 100, 1) : 0;
+        echo $total_male . ' <small>(' . $percent_all . '%)</small>';
+        ?>
+    </td>
+</tr>
+<tr>
+    <td>Female</td>
+    <td class="text-center">
+        <?php
+        $external_female = isset($sex['external_female']) ? $sex['external_female'] : 0;
+        $total_external = isset($sex['total_external']) ? $sex['total_external'] : 0;
+        $percent_external = $total_external != 0 ? round(($external_female / $total_external) * 100, 1) : 0;
+        echo $external_female . ' <small>(' . $percent_external . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $internal_female = isset($sex['internal_female']) ? $sex['internal_female'] : 0;
+        $total_internal = isset($sex['total_internal']) ? $sex['total_internal'] : 0;
+        $percent_internal = $total_internal != 0 ? round(($internal_female / $total_internal) * 100, 1) : 0;
+        echo $internal_female . ' <small>(' . $percent_internal . '%)</small>';
+        ?>
+    </td>
+    <td class="text-center">
+        <?php
+        $total_female = isset($sex['total_female']) ? $sex['total_female'] : 0;
+        $all_total = isset($sex['all_total']) ? $sex['all_total'] : 0;
+        $percent_all = $all_total != 0 ? round(($total_female / $all_total) * 100, 1) : 0;
+        echo $total_female . ' <small>(' . $percent_all . '%)</small>';
+        ?>
+    </td>
+</tr>
         </tbody>
     </table>
 
