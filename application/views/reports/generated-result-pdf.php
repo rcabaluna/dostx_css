@@ -632,10 +632,18 @@ Office: <?=$officename['name']?> <br>
         <tbody>
             <tr>
                 <td class="text-center">SQD0</td>
-                <?php for ($i=5; $i >=1 ; $i--) { ?>
-                    <td class="text-center"><?=($sqd[$i.'_SQD0'] ?? 0)?></td>
-                <?php } ?>
-                <td class="text-center"><?=($sqd['Total_SQD0'] ?? 0)?></td>
+                <?php 
+    // Loop through values from 5 to 1
+    for ($i = 5; $i >= 1; $i--) { 
+        // Print the count for each category
+        $key = $i . '_SQD0';
+        $count = isset($sqd[$key]) ? $sqd[$key] : 0;
+        echo '<td class="text-center">' . $count . '</td>';
+    } 
+    ?>
+    <td class="text-center">
+        <?= isset($sqd['Total_SQD0']) ? $sqd['Total_SQD0'] : 0 ?>
+    </td>
                 <td class="text-center">
                     <?php $highest_possible_score = $sqd['Total_SQD0']*5;
                             $xtotal = 0;
