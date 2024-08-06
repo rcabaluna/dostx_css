@@ -729,25 +729,26 @@ Office: <?=$officename['name']?> <br>
         <?php
             function generateRow($title, $sqd, $sqdKey) {
                 ?>
-                <tr>
-                    <td><?= $title ?></td>
-                    <?php for ($i = 5; $i >= 1; $i--) { ?>
-                        <td class="text-center"><?= ($sqd[$i . '_' . $sqdKey] ?? 0) ?></td>
-                    <?php } ?>
-                    <td class="text-center"><?= ($sqd['Total_' . $sqdKey] ?? 0) ?></td>
-                    <td class="text-center">
-                        <?php 
-                        $xsum = 0;
-                        for ($i = 5; $i >= 1; $i--) {
-                            $temp = $i * ($sqd[$i . '_' . $sqdKey] ?? 0);
-                            $xsum += $temp;
-                        }
-                        $max_possible_score = ($sqd['Total_' . $sqdKey] ?? 0) * 5;
-                        $percentage = ($max_possible_score != 0) ? round(($xsum / $max_possible_score) * 100, 1) : 0;
-                        echo $percentage . '%';
-                        ?>
-                    </td>
-                </tr>
+                                       <tr>
+    <td><?= $title ?></td>
+    <?php for ($i = 5; $i >= 1; $i--) { ?>
+        <td class="text-center"><?= isset($sqd[$i . '_' . $sqdKey]) ? $sqd[$i . '_' . $sqdKey] : 0 ?></td>
+    <?php } ?>
+    <td class="text-center"><?= isset($sqd['Total_' . $sqdKey]) ? $sqd['Total_' . $sqdKey] : 0 ?></td>
+    <td class="text-center">
+        <?php 
+        $xsum = 0;
+        for ($i = 5; $i >= 1; $i--) {
+            $temp = $i * (isset($sqd[$i . '_' . $sqdKey]) ? $sqd[$i . '_' . $sqdKey] : 0);
+            $xsum += $temp;
+        }
+        $total = isset($sqd['Total_' . $sqdKey]) ? $sqd['Total_' . $sqdKey] : 0;
+        $max_possible_score = $total * 5;
+        $percentage = ($max_possible_score != 0) ? round(($xsum / $max_possible_score) * 100, 1) : 0;
+        echo $percentage . '%';
+        ?>
+    </td>
+</tr>
                 <?php
             }
             ?>
