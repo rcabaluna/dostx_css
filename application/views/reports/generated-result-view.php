@@ -714,37 +714,75 @@
                             generateRow('Outcome', $sqd, 'SQD8');
                             ?>
                         <tr>
-                            <td><b>Overall</b></td>
-                            <td class="text-center"><?php $overall_sum = $sum_5 = 0; for ($i=1; $i <=8 ; $i++) { $sum_5+=$sqd['5_SQD'.$i] ?? 0?>
-                            <?php } $overall_sum+=$sum_5; ?>
-                            <strong><?=$sum_5?></strong></td>
-                            <td class="text-center"><?php $sum_4 = 0; for ($i=1; $i <=8 ; $i++) { $sum_4+=$sqd['4_SQD'.$i] ?? 0?>
-                            <?php } $overall_sum+=$sum_4;?>
-                            <strong><?=$sum_4?></strong></td>
-                            <td class="text-center"><?php $sum_3 = 0; for ($i=1; $i <=8 ; $i++) { $sum_3+=$sqd['3_SQD'.$i] ?? 0?>
-                            <?php } $overall_sum+=$sum_3;?>
-                            <strong><?=$sum_3?></strong></td>
-                            <td class="text-center"><?php $sum_2 = 0; for ($i=1; $i <=8 ; $i++) { $sum_2+=$sqd['2_SQD'.$i] ?? 0?>
-                            <?php } $overall_sum+=$sum_2; ?>
-                            <strong><?=$sum_2?></strong></td>
-                            <td class="text-center"><?php $sum_1 = 0; for ($i=1; $i <=8 ; $i++) { $sum_1+=$sqd['1_SQD'.$i] ?? 0?>
-                            <?php } $overall_sum+=$sum_1;?>
-                            <strong><?=$sum_1?></strong></td>
-                            <td class="text-center"><strong><?=$overall_sum;?></strong></td>
-                            <td class="text-center">
-                                <strong>
-                                <?php $highest_possible_score = $overall_sum*5;
-                                        $xtotal = 0;
-                                        for ($i=1; $i <= 5; $i++) { 
-                                            $xtotal += ${'sum_' . $i}*$i;
-                                        }
+    <td><b>Overall</b></td>
+    <td class="text-center">
+        <?php 
+        $overall_sum = $sum_5 = 0; 
+        for ($i = 1; $i <= 8; $i++) { 
+            $sum_5 += isset($sqd['5_SQD' . $i]) ? $sqd['5_SQD' . $i] : 0;
+        } 
+        $overall_sum += $sum_5; 
+        ?>
+        <strong><?= $sum_5 ?></strong>
+    </td>
+    <td class="text-center">
+        <?php 
+        $sum_4 = 0; 
+        for ($i = 1; $i <= 8; $i++) { 
+            $sum_4 += isset($sqd['4_SQD' . $i]) ? $sqd['4_SQD' . $i] : 0;
+        } 
+        $overall_sum += $sum_4;
+        ?>
+        <strong><?= $sum_4 ?></strong>
+    </td>
+    <td class="text-center">
+        <?php 
+        $sum_3 = 0; 
+        for ($i = 1; $i <= 8; $i++) { 
+            $sum_3 += isset($sqd['3_SQD' . $i]) ? $sqd['3_SQD' . $i] : 0;
+        } 
+        $overall_sum += $sum_3;
+        ?>
+        <strong><?= $sum_3 ?></strong>
+    </td>
+    <td class="text-center">
+        <?php 
+        $sum_2 = 0; 
+        for ($i = 1; $i <= 8; $i++) { 
+            $sum_2 += isset($sqd['2_SQD' . $i]) ? $sqd['2_SQD' . $i] : 0;
+        } 
+        $overall_sum += $sum_2; 
+        ?>
+        <strong><?= $sum_2 ?></strong>
+    </td>
+    <td class="text-center">
+        <?php 
+        $sum_1 = 0; 
+        for ($i = 1; $i <= 8; $i++) { 
+            $sum_1 += isset($sqd['1_SQD' . $i]) ? $sqd['1_SQD' . $i] : 0;
+        } 
+        $overall_sum += $sum_1;
+        ?>
+        <strong><?= $sum_1 ?></strong>
+    </td>
+    <td class="text-center">
+        <strong><?= $overall_sum ?></strong>
+    </td>
+    <td class="text-center">
+        <strong>
+        <?php 
+        $highest_possible_score = $overall_sum * 5;
+        $xtotal = 0;
+        for ($i = 1; $i <= 5; $i++) { 
+            $xtotal += ${'sum_' . $i} * $i;
+        }
+        $percentage = ($highest_possible_score != 0) ? round(($xtotal / $highest_possible_score) * 100, 1) : 0;
+        echo $percentage . '%';
+        ?>
+        </strong>
+    </td>
+</tr>
 
-                                        $percentage = ($highest_possible_score != 0) ? round(($xtotal / $highest_possible_score) * 100, 1) : 0;
-                                        echo $percentage . '%';
-                                    ?>
-                                </strong>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
                 <h5>Part V. Repondents Demographic Profile</h5>
