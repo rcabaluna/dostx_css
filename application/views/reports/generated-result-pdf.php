@@ -466,93 +466,169 @@ Office: <?=$officename['name']?> <br>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td colspan="3"><b>CC1. Which of the following describes your awareness of the CC?</b></td>
-            </tr>
-            <tr>
-                <td>1. I know what a CC is and I saw this office's CC.</td>
-                <td class="text-center"><?=($cc['4_CC1'] ?? 0)?></td>
-                <td class="text-center"><?=(($cc['Total_CC1'] ?? 0) != 0 
-                    ? round((($cc['4_CC1'] ?? 0) / $cc['Total_CC1']) * 100,1) 
-                    : 0) . '%' ?></td>
-            </tr>
-            <tr>
-                <td>2. I know what a CC is but I did not see this office's CC.</td>
-                <td class="text-center"><?=($cc['3_CC1'] ?? 0)?></td>
-                <td class="text-center"><?=(($cc['Total_CC1'] ?? 0) != 0 
-                    ? round((($cc['3_CC1'] ?? 0) / $cc['Total_CC1']) * 100,1) 
-                    : 0) . '%' ?></td>
-            </tr>
-            <tr>
-                <td>3. I learned of the CC only when I saw this office's CC.</td>
-                <td class="text-center"><?=($cc['2_CC1'] ?? 0)?></td>
-                <td class="text-center"><?=(($cc['Total_CC1'] ?? 0) != 0 
-                    ? round((($cc['2_CC1'] ?? 0) / $cc['Total_CC1']) * 100,1) 
-                    : 0) . '%' ?></td>
-            </tr>
-            <tr>
-                <td>4. I do not know what a CC is and I did not see this office's CC.</td>
-                <td class="text-center"><?=($cc['1_CC1'] ?? 0)?></td>
-                <td class="text-center"><?=(($cc['Total_CC1'] ?? 0) != 0 
-                    ? round((($cc['1_CC1'] ?? 0) / $cc['Total_CC1']) * 100,1) 
-                    : 0) . '%' ?></td>
-            </tr>
-            <tr>
-                <td colspan="3"><b>CC2. If aware of CC, would you say that the CC of this office was...?</b></td>
-            </tr>
-            <tr>
-                <td>1. Easy to see</td>
-                <td class="text-center"><?=($cc['4_CC2'] ?? 0)?></td>
-                <td class="text-center"><?=(($cc['Total_CC2'] ?? 0) != 0 
-                    ? round((($cc['4_CC2'] ?? 0) / $cc['Total_CC2']) * 100,1) 
-                    : 0) . '%' ?></td>
-            </tr>
-            <tr>
-                <td>2. Somewhat easy to see</td>
-                <td class="text-center"><?=($cc['3_CC2'] ?? 0)?></td>
-                <td class="text-center"><?=(($cc['Total_CC2'] ?? 0) != 0 
-                    ? round((($cc['3_CC2'] ?? 0) / $cc['Total_CC2']) * 100,1) 
-                    : 0) . '%' ?></td>
-            </tr>
-            <tr>
-                <td>3. Difficult to see</td>
-                <td class="text-center"><?=($cc['2_CC2'] ?? 0)?></td>
-                <td class="text-center"><?=(($cc['Total_CC2'] ?? 0) != 0 
-                    ? round((($cc['2_CC2'] ?? 0) / $cc['Total_CC2']) * 100,1) 
-                    : 0) . '%' ?></td>
-            </tr>
-            <tr>
-                <td>4. Not visible at all</td>
-                <td class="text-center"><?=($cc['1_CC2'] ?? 0)?></td>
-                <td class="text-center"><?=(($cc['Total_CC2'] ?? 0) != 0 
-                    ? round((($cc['1_CC2'] ?? 0) / $cc['Total_CC2']) * 100,1) 
-                    : 0) . '%' ?></td>
-            </tr>
-            <tr>
-                <td colspan="3"><b>CC3. If aware of CC, how much did the CC help you in your transaction?</b></td>
-            </tr>
-            <tr>
-                <td>1. Helped very much</td>
-                <td class="text-center"><?=($cc['3_CC3'] ?? 0)?></td>
-                <td class="text-center"><?=(($cc['Total_CC3'] ?? 0) != 0 
-                    ? round((($cc['3_CC3'] ?? 0) / $cc['Total_CC3']) * 100,1) 
-                    : 0) . '%' ?></td>
-            </tr>
-            <tr>
-                <td>2. Somewhat helped</td>
-                <td class="text-center"><?=($cc['2_CC3'] ?? 0)?></td>
-                <td class="text-center"><?=(($cc['Total_CC3'] ?? 0) != 0 
-                    ? round((($cc['2_CC3'] ?? 0) / $cc['Total_CC3']) * 100,1) 
-                    : 0) . '%' ?></td>
-            </tr>
-            <tr>
-                <td>3. Did not help</td>
-                <td class="text-center"><?=($cc['1_CC3'] ?? 0)?></td>
-                <td class="text-center"><?=(($cc['Total_CC3'] ?? 0) != 0 
-                    ? round((($cc['1_CC3'] ?? 0) / $cc['Total_CC3']) * 100,1) 
-                    : 0) . '%' ?></td>
-            </tr>
-        </tbody>
+    <tr>
+        <td><b>CC1. Which of the following describes your awareness of the CC?</b></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>1. I know what a CC is and I saw this office's CC.</td>
+        <td class="text-center">
+            <?= isset($cc['4_CC1']) ? $cc['4_CC1'] : 0 ?>
+        </td>
+        <td class="text-center">
+            <?php
+            $cc_4 = isset($cc['4_CC1']) ? $cc['4_CC1'] : 0;
+            $total_cc1 = isset($cc['Total_CC1']) ? $cc['Total_CC1'] : 0;
+            $percent_cc_4 = $total_cc1 != 0 ? round(($cc_4 / $total_cc1) * 100, 1) : 0;
+            echo $percent_cc_4 . '%';
+            ?>
+        </td>
+    </tr>
+    <tr>
+        <td>2. I know what a CC is but I did not see this office's CC.</td>
+        <td class="text-center">
+            <?= isset($cc['3_CC1']) ? $cc['3_CC1'] : 0 ?>
+        </td>
+        <td class="text-center">
+            <?php
+            $cc_3 = isset($cc['3_CC1']) ? $cc['3_CC1'] : 0;
+            $percent_cc_3 = $total_cc1 != 0 ? round(($cc_3 / $total_cc1) * 100, 1) : 0;
+            echo $percent_cc_3 . '%';
+            ?>
+        </td>
+    </tr>
+    <tr>
+        <td>3. I learned of the CC only when I saw this office's CC.</td>
+        <td class="text-center">
+            <?= isset($cc['2_CC1']) ? $cc['2_CC1'] : 0 ?>
+        </td>
+        <td class="text-center">
+            <?php
+            $cc_2 = isset($cc['2_CC1']) ? $cc['2_CC1'] : 0;
+            $percent_cc_2 = $total_cc1 != 0 ? round(($cc_2 / $total_cc1) * 100, 1) : 0;
+            echo $percent_cc_2 . '%';
+            ?>
+        </td>
+    </tr>
+    <tr>
+        <td>4. I do not know what a CC is and I did not see this office's CC.</td>
+        <td class="text-center">
+            <?= isset($cc['1_CC1']) ? $cc['1_CC1'] : 0 ?>
+        </td>
+        <td class="text-center">
+            <?php
+            $cc_1 = isset($cc['1_CC1']) ? $cc['1_CC1'] : 0;
+            $percent_cc_1 = $total_cc1 != 0 ? round(($cc_1 / $total_cc1) * 100, 1) : 0;
+            echo $percent_cc_1 . '%';
+            ?>
+        </td>
+    </tr>
+    <tr>
+        <td><b>CC2. If aware of CC, would you say that the CC of this office was...?</b></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>1. Easy to see</td>
+        <td class="text-center">
+            <?= isset($cc['4_CC2']) ? $cc['4_CC2'] : 0 ?>
+        </td>
+        <td class="text-center">
+            <?php
+            $cc_4_cc2 = isset($cc['4_CC2']) ? $cc['4_CC2'] : 0;
+            $total_cc2 = isset($cc['Total_CC2']) ? $cc['Total_CC2'] : 0;
+            $percent_cc_4_cc2 = $total_cc2 != 0 ? round(($cc_4_cc2 / $total_cc2) * 100, 1) : 0;
+            echo $percent_cc_4_cc2 . '%';
+            ?>
+        </td>
+    </tr>
+    <tr>
+        <td>2. Somewhat easy to see</td>
+        <td class="text-center">
+            <?= isset($cc['3_CC2']) ? $cc['3_CC2'] : 0 ?>
+        </td>
+        <td class="text-center">
+            <?php
+            $cc_3_cc2 = isset($cc['3_CC2']) ? $cc['3_CC2'] : 0;
+            $percent_cc_3_cc2 = $total_cc2 != 0 ? round(($cc_3_cc2 / $total_cc2) * 100, 1) : 0;
+            echo $percent_cc_3_cc2 . '%';
+            ?>
+        </td>
+    </tr>
+    <tr>
+        <td>3. Difficult to see</td>
+        <td class="text-center">
+            <?= isset($cc['2_CC2']) ? $cc['2_CC2'] : 0 ?>
+        </td>
+        <td class="text-center">
+            <?php
+            $cc_2_cc2 = isset($cc['2_CC2']) ? $cc['2_CC2'] : 0;
+            $percent_cc_2_cc2 = $total_cc2 != 0 ? round(($cc_2_cc2 / $total_cc2) * 100, 1) : 0;
+            echo $percent_cc_2_cc2 . '%';
+            ?>
+        </td>
+    </tr>
+    <tr>
+        <td>4. Not visible at all</td>
+        <td class="text-center">
+            <?= isset($cc['1_CC2']) ? $cc['1_CC2'] : 0 ?>
+        </td>
+        <td class="text-center">
+            <?php
+            $cc_1_cc2 = isset($cc['1_CC2']) ? $cc['1_CC2'] : 0;
+            $percent_cc_1_cc2 = $total_cc2 != 0 ? round(($cc_1_cc2 / $total_cc2) * 100, 1) : 0;
+            echo $percent_cc_1_cc2 . '%';
+            ?>
+        </td>
+    </tr>
+    <tr>
+        <td><b>CC3. If aware of CC, how much did the CC help you in your transaction?</b></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>1. Helped very much</td>
+        <td class="text-center">
+            <?= isset($cc['3_CC3']) ? $cc['3_CC3'] : 0 ?>
+        </td>
+        <td class="text-center">
+            <?php
+            $cc_3_cc3 = isset($cc['3_CC3']) ? $cc['3_CC3'] : 0;
+            $total_cc3 = isset($cc['Total_CC3']) ? $cc['Total_CC3'] : 0;
+            $percent_cc_3_cc3 = $total_cc3 != 0 ? round(($cc_3_cc3 / $total_cc3) * 100, 1) : 0;
+            echo $percent_cc_3_cc3 . '%';
+            ?>
+        </td>
+    </tr>
+    <tr>
+        <td>2. Somewhat helped</td>
+        <td class="text-center">
+            <?= isset($cc['2_CC3']) ? $cc['2_CC3'] : 0 ?>
+        </td>
+        <td class="text-center">
+            <?php
+            $cc_2_cc3 = isset($cc['2_CC3']) ? $cc['2_CC3'] : 0;
+            $percent_cc_2_cc3 = $total_cc3 != 0 ? round(($cc_2_cc3 / $total_cc3) * 100, 1) : 0;
+            echo $percent_cc_2_cc3 . '%';
+            ?>
+        </td>
+    </tr>
+    <tr>
+        <td>3. Did not help</td>
+        <td class="text-center">
+            <?= isset($cc['1_CC3']) ? $cc['1_CC3'] : 0 ?>
+        </td>
+        <td class="text-center">
+            <?php
+            $cc_1_cc3 = isset($cc['1_CC3']) ? $cc['1_CC3'] : 0;
+            $percent_cc_1_cc3 = $total_cc3 != 0 ? round(($cc_1_cc3 / $total_cc3) * 100, 1) : 0;
+            echo $percent_cc_1_cc3 . '%';
+            ?>
+        </td>
+    </tr>
+</tbody>
+
     </table>
     <h5>Part III. Score Per Service</h5>
     <table class="table table-bordered table-full">
