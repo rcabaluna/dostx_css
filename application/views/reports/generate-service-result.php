@@ -1,14 +1,15 @@
 <!-- Content Wrapper START -->
 <div class="main-content">
     <div class="page-header">
-        <h2 class="header-title">Generate</h2>
+        <h2 class="header-title">Responses</h2>
         <div class="header-sub-title">
             <nav class="breadcrumb breadcrumb-dash">
                 <a class="breadcrumb-item" href="#">Reports</a>
-                <span class="breadcrumb-item active">Generate</span>
+                <span class="breadcrumb-item active">Generate Service Report</span>
             </nav>
         </div>
     </div>
+
     <div class="card">
         <div class="card-body">
             <div class="row m-b-30">
@@ -92,52 +93,3 @@
         </div>
     </div>
 </div>
-
-
-<script>
-    $('#typeSelector').change(function() {
-        var selectedType = $(this).val();
-        if (selectedType === 'semester') {
-            $('#semesterContainer').show();
-            $('#quarterContainer').hide();
-        } else if (selectedType === 'quarter') {
-            $('#semesterContainer').hide();
-            $('#quarterContainer').show();
-        }
-    });
-
-    // Trigger the change event on page load to set the correct initial state
-    $('#typeSelector').trigger('change');
-
-    $(document).ready(function () {
-        
-        
-        applyFilter();
-
-    });
-
-    function applyFilter(){
-
-        $("#btnFilter").addClass("is-loading");
-        setTimeout(function() { $("#btnFilter").removeClass("is-loading");}, 1000);
-
-        var selyear = $("#selyear").val();
-        var selquarterid = $("#selQuarterId").val();
-        var selsemesterid = $("#selSemesterId").val();
-        var selofficeid = $("#selofficeid").val();
-        var typeselector = $("#typeSelector").val();
-
-        $("#btndownloadpdf").attr("href", BASE_URL+"reports/gen_pdf?year="+selyear+"&quarterid="+selquarterid+"&semesterid="+selsemesterid+"&officeid="+selofficeid+"&typeselector="+typeselector);
-
-        $.post(BASE_URL+'reports/gen_result',{
-            year : selyear,
-            officeid : selofficeid,
-            semesterid : selsemesterid,
-            quarterid : selquarterid,
-            typeselector : typeselector
-
-        },function(data){
-            $("#data-view-container").html(data);
-        });
-    }
-</script>

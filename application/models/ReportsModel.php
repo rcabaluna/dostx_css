@@ -620,7 +620,14 @@ class ReportsModel extends CI_Model
             tc.total_xcount,
             ROUND(COALESCE(sc.xcount, 0) / NULLIF(tc.total_xcount, 0) * 100, 1) AS percentx,
             COALESCE(vc.vs_xcount, 0) AS vs_xcount,
-            COALESCE(xx.xx, 0) AS xx
+            COALESCE(xx.xx, 0) AS xx,
+            (
+                SELECT 
+                    CONCAT(GROUP_CONCAT(IF(csssqd.suggestions != '', CONCAT(csssqd.suggestions), NULL) SEPARATOR ';;'))
+                FROM tblcss_details_sqd csssqd 
+                JOIN tblcss_summary csssum ON csssum.csssummaryid = csssqd.csssummaryid 
+                WHERE csssum.servicesid = ser.servicesid AND csssum.year = ".$params['year'] . $semesteridExt . $quarteridExt ."
+            ) AS comments
         FROM tblservices ser
         LEFT JOIN (
             SELECT servicesid, COUNT(*) AS xcount
@@ -664,6 +671,93 @@ class ReportsModel extends CI_Model
                 JOIN tblquarters qua ON qua.quarterid = csssum.quarterid
                 LEFT JOIN tblcss_details_sqd sqd ON sqd.csssummaryid = csssum.csssummaryid
                 WHERE csssum.year = ".$params['year']. $semesteridExt . $quarteridExt
+                .") AS css_summary
+            GROUP BY servicesid
+        ) AS xx ON ser.servicesid = xx.servicesid
+        WHERE ser.is_external = ".$is_external." AND ser.is_active = 1");
+
+        return $query->result_array();
+    }
+
+    public function gen_services_external($params, $is_external){
+
+        $quarteridExt = $semesteridExt = $officeidExt = '';
+        
+        if ($params['typeselector'] === 'semester') {
+            if ($params['semesterid'] != 'all') {
+                $semesteridExt = " AND qua.semesterid = ".$params['semesterid'];
+            }
+        }
+
+        if ($params['typeselector'] === 'quarter') {
+            $quarteridExt = " AND csssum.quarterid = ".$params['quarterid'];
+        }
+
+       
+        if ($params['officeid'] != 'all') {
+            $officeidExt = " AND csssum.officeid = ".$params['officeid'];
+        }
+
+        $query = $this->db->query("SELECT 
+            ser.servicesid,
+            ser.name,
+            ser.unit,
+            ser.is_cc,
+            COALESCE(sc.xcount, 0) AS xcount,
+            tc.total_xcount,
+            ROUND(COALESCE(sc.xcount, 0) / NULLIF(tc.total_xcount, 0) * 100, 1) AS percentx,
+            COALESCE(vc.vs_xcount, 0) AS vs_xcount,
+            COALESCE(xx.xx, 0) AS xx,
+            (
+                SELECT 
+                    CONCAT(GROUP_CONCAT(IF(csssqd.suggestions != '', CONCAT(csssqd.suggestions), NULL) SEPARATOR ';;'))
+                FROM tblcss_details_sqd csssqd 
+                JOIN tblcss_summary csssum ON csssum.csssummaryid = csssqd.csssummaryid 
+                WHERE csssum.servicesid = ser.servicesid AND csssum.year = ".$params['year'] . $semesteridExt . $quarteridExt . $officeidExt ."
+            ) AS comments
+        FROM tblservices ser
+        LEFT JOIN (
+            SELECT servicesid, COUNT(*) AS xcount
+            FROM (
+                SELECT csssum.servicesid, csssum.quarterid, qua.semesterid, csssum.year, sqd.sqd0
+                FROM tblcss_summary csssum
+                JOIN tblquarters qua ON qua.quarterid = csssum.quarterid
+                LEFT JOIN tblcss_details_sqd sqd ON sqd.csssummaryid = csssum.csssummaryid
+                WHERE csssum.year = ".$params['year'] . $semesteridExt . $quarteridExt . $officeidExt
+            .") AS css_summary
+            GROUP BY servicesid
+        ) AS sc ON ser.servicesid = sc.servicesid
+        LEFT JOIN (
+            SELECT COUNT(*) AS total_xcount
+            FROM (
+                SELECT csssum.servicesid, csssum.quarterid, qua.semesterid, csssum.year, sqd.sqd0
+                FROM tblcss_summary csssum
+                JOIN tblquarters qua ON qua.quarterid = csssum.quarterid
+                LEFT JOIN tblcss_details_sqd sqd ON sqd.csssummaryid = csssum.csssummaryid
+                WHERE csssum.year = ".$params['year']. $semesteridExt . $quarteridExt . $officeidExt
+                .") AS css_summary
+            JOIN tblservices serx ON serx.servicesid = css_summary.servicesid
+            WHERE serx.is_external = ".$is_external.") AS tc ON 1=1
+        LEFT JOIN (
+            SELECT servicesid, COUNT(*) AS vs_xcount
+            FROM (
+                SELECT csssum.servicesid, csssum.quarterid, qua.semesterid, csssum.year, sqd.sqd0
+                FROM tblcss_summary csssum
+                JOIN tblquarters qua ON qua.quarterid = csssum.quarterid
+                LEFT JOIN tblcss_details_sqd sqd ON sqd.csssummaryid = csssum.csssummaryid
+                WHERE csssum.year = ".$params['year'] . $semesteridExt . $quarteridExt . $officeidExt
+                .") AS css_summary
+            WHERE sqd0 >= 4
+            GROUP BY servicesid
+        ) AS vc ON ser.servicesid = vc.servicesid
+        LEFT JOIN (
+            SELECT servicesid, ROUND(IFNULL(SUM(sqd0) / NULLIF(COUNT(*), 0), 0) * 20, 1) AS xx
+            FROM (
+                SELECT csssum.servicesid, csssum.quarterid, qua.semesterid, csssum.year, sqd.sqd0
+                FROM tblcss_summary csssum
+                JOIN tblquarters qua ON qua.quarterid = csssum.quarterid
+                LEFT JOIN tblcss_details_sqd sqd ON sqd.csssummaryid = csssum.csssummaryid
+                WHERE csssum.year = ".$params['year']. $semesteridExt . $quarteridExt . $officeidExt
                 .") AS css_summary
             GROUP BY servicesid
         ) AS xx ON ser.servicesid = xx.servicesid

@@ -63,7 +63,7 @@ class Reports extends CI_Controller
         $data['ctype_total_external'] = $ctype_total_external;
         $data['ctype_total_internal'] = $ctype_total_internal;
 
-        $data['services_external'] = $this->reportsModel->gen_services($params, 1);
+        $data['services_external'] = $this->reportsModel->gen_services_external($params, 1);
         $data['services_internal'] = $this->reportsModel->gen_services($params, 0);
 
         $data['sex']['total_male'] = $data['sex']['external_male'] + $data['sex']['internal_male'];
@@ -130,7 +130,7 @@ class Reports extends CI_Controller
         $data['ctype_total_external'] = $ctype_total_external;
         $data['ctype_total_internal'] = $ctype_total_internal;
 
-        $data['services_external'] = $this->reportsModel->gen_services($params, 1);
+        $data['services_external'] = $this->reportsModel->gen_services_external($params, 1);
         $data['services_internal'] = $this->reportsModel->gen_services($params, 0);
 
         $data['sex']['total_male'] = $data['sex']['external_male'] + $data['sex']['internal_male'];
@@ -169,5 +169,15 @@ class Reports extends CI_Controller
         $data['sqd'] = $this->reportsModel->gen_sqd($params);
 
         $this->load->view('reports/generated-result-pdf', $data);
+    }
+
+    public function service_generate(){
+        $param = $this->uri->segment(4);
+
+        $data['quarters'] = $this->reportsModel->get_all_data('tblquarters');
+        $data['offices'] = $this->reportsModel->get_all_data('tbloffice');
+
+        $data['content'] = 'reports/generate-service-result';
+        $this->load->view('admin/main', $data);
     }
 }

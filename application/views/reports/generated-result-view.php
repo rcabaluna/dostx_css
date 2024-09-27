@@ -1,6 +1,6 @@
 <div class="m-t-25">
                 <h5>Part I. Respondents Demographic Profile</h5>
-                <table class="table table-bordered table-sm">
+                <table class="table table-hover table-bordered table-sm">
                     <thead>
                         <tr class="text-center">
                             <th></th>
@@ -404,7 +404,7 @@
                 </table>
 
                 <h5>Part II. Results of Citizen's Charter Questions</h5>
-                <table class="table table-bordered table-sm">
+                <table class="table table-hover table-bordered table-sm">
                     <thead>
                         <tr>
                             <th>Citizen's Charter Answers</th>
@@ -578,7 +578,7 @@
 
                 </table>
                 <h5>Part III. Score Per Service</h5>
-                <table class="table table-bordered table-sm">
+                <table class="table table-hover table-bordered table-sm">
                     <thead>
                         <tr class="text-center">
                             <th>Services</th>
@@ -594,11 +594,29 @@
                         </tr>
                         <?php foreach ($services_external as $services_externalRow) { ?>
                             <tr>
-                                <td><?php echo $services_externalRow['name'] . ($services_externalRow['unit'] ? " - " : '') . $services_externalRow['unit'] . ($services_externalRow['is_cc'] == 1 ? "*" : ''); ?></td>
+                                <td><a href="#" class="toggle-comments">
+                                    <span class="arrow">&#9656;</span>
+                                    <?php echo $services_externalRow['name'] . ($services_externalRow['unit'] ? " - " : '') . $services_externalRow['unit'] . ($services_externalRow['is_cc'] == 1 ? "*" : ''); ?></a></td>
                                 <td class="text-center"><?=$services_externalRow['xcount']?></td>
                                 <td class="text-center"><?=$services_externalRow['percentx']."%"?></td>
                                 <td class="text-center"><?=$services_externalRow['vs_xcount']?></td>
                                 <td class="text-center"><?=$services_externalRow['xx']."%"?></td>
+                            </tr>
+                            <tr class="comments-row" style="display: none;">
+                                <td><i>Comments</i></td>
+                                <td colspan="4"><?php
+                                    
+
+                                    if ($services_externalRow['comments']) {
+                                        $comments = explode(';;',$services_externalRow['comments']);
+
+                                        for ($i=0; $i < sizeof($comments); $i++) { 
+                                            echo "- $comments[$i] <br>";
+                                        }
+
+                                    }
+                                
+                                ?></td>
                             </tr>
                         <?php }?>
                         <tr>
@@ -606,17 +624,37 @@
                         </tr>
                         <?php foreach ($services_internal as $services_internalRow) { ?>
                             <tr>
-                                <td><?php echo $services_internalRow['name'] . ($services_internalRow['name'] && $services_internalRow['unit'] ? " - " : '') . $services_internalRow['unit'] . ($services_internalRow['is_cc'] == 1 ? "*" : ''); ?></td>
+
+                                <td><a href="#" class="toggle-comments">
+                                    <span class="arrow">&#9656;</span>
+                                    <?php echo $services_internalRow['name'] . ($services_internalRow['name'] && $services_internalRow['unit'] ? " - " : '') . $services_internalRow['unit'] . ($services_internalRow['is_cc'] == 1 ? "*" : ''); ?></td>
+
                                 <td class="text-center"><?=$services_internalRow['xcount']?></td>
                                 <td class="text-center"><?=$services_internalRow['percentx']."%"?></td>
                                 <td class="text-center"><?=$services_internalRow['vs_xcount']?></td>
                                 <td class="text-center"><?=$services_internalRow['xx']."%"?></td>
                             </tr>
+                            <tr class="comments-row" style="display: none;">
+                                <td><i>Comments</i></td>
+                                <td colspan="4"><?php
+                                    
+
+                                    if ($services_internalRow['comments']) {
+                                        $comments = explode(';;',$services_internalRow['comments']);
+
+                                        for ($i=0; $i < sizeof($comments); $i++) { 
+                                            echo "- $comments[$i] <br>";
+                                        }
+
+                                    }
+                                
+                                ?></td>
+                            </tr>
                         <?php }?>
                     </tbody>
                 </table>
                 <h5>Part IV. Results of Service Quality Dimensions</h5>
-                <table class="table table-bordered table-sm">
+                <table class="table table-hover table-bordered table-sm">
                     <thead>
                         <tr class="text-center">
                             <th>SQD</th>
@@ -632,18 +670,18 @@
                     <tbody>
                         <tr>
                         <td class="text-center">SQD0</td>
-    <?php 
-    // Loop through values from 5 to 1
-    for ($i = 5; $i >= 1; $i--) { 
-        // Print the count for each category
-        $key = $i . '_SQD0';
-        $count = isset($sqd[$key]) ? $sqd[$key] : 0;
-        echo '<td class="text-center">' . $count . '</td>';
-    } 
-    ?>
-    <td class="text-center">
-        <?= isset($sqd['Total_SQD0']) ? $sqd['Total_SQD0'] : 0 ?>
-    </td>
+                            <?php 
+                            // Loop through values from 5 to 1
+                            for ($i = 5; $i >= 1; $i--) { 
+                                // Print the count for each category
+                                $key = $i . '_SQD0';
+                                $count = isset($sqd[$key]) ? $sqd[$key] : 0;
+                                echo '<td class="text-center">' . $count . '</td>';
+                            } 
+                            ?>
+                            <td class="text-center">
+                                <?= isset($sqd['Total_SQD0']) ? $sqd['Total_SQD0'] : 0 ?>
+                            </td>
 
                             <td class="text-center">
                                 <?php $highest_possible_score = $sqd['Total_SQD0']*5;
@@ -660,7 +698,7 @@
                     </tbody>
                 </table>
 
-                <table class="table table-bordered table-sm">
+                <table class="table table-hover table-bordered table-sm">
                     <thead>
                         <tr class="text-center">
                             <th>Service Quality Dimensions</th>
@@ -819,7 +857,7 @@
                 <?=$params['year']?> is <strong><?=$sqd0_percentage?>%</strong></p>
 
                 <p><b>The interpretation of the results are as follows:</b></p>
-                <table class="table table-bordered table-sm">
+                <table class="table table-hover table-bordered table-sm">
                     <thead>
                         <tr>
                             <th>Percentage</th>
@@ -851,3 +889,28 @@
                 </table>
                 <h5>Annex. Comments or suggestions from the clients or customers.</h5>
             </div>
+
+            <script>
+    $(document).ready(function() {
+        // Click event for toggling the comments and arrow direction
+        $('a.toggle-comments').on('click', function(event) {
+            event.preventDefault(); // Prevent the default action of anchor link
+
+            // Get the associated comments row
+            var commentsRow = $(this).closest('tr').next('.comments-row');
+            // Toggle the visibility of the comments row
+            commentsRow.toggle();
+
+            // Find the arrow within the clicked link and toggle it
+            var arrow = $(this).find('.arrow');
+
+            if (commentsRow.is(':visible')) {
+                // If the row is visible, change the arrow to "up" (▲)
+                arrow.html('&#9662;'); // Up arrow
+            } else {
+                // If the row is hidden, change the arrow to "down" (▼)
+                arrow.html('&#9656;'); // Down arrow
+            }
+        });
+    });
+</script>

@@ -71,5 +71,11 @@ $route['reports/generate'] = 'reports/generate';
 $route['reports/gen_result'] = 'reports/gen_result';
 $route['reports/gen_pdf'] = 'reports/gen_pdf';
 
-$route['user/dashboard'] = 'user/dashboard';
+
+$route['reports/serv/generate'] = 'reports/service_generate';
+
+
+// $route['user/dashboard'] = 'user/dashboard';
+
+
 
