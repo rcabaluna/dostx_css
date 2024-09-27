@@ -611,9 +611,11 @@
                                         $comments = explode(';;',$services_externalRow['comments']);
 
                                         for ($i=0; $i < sizeof($comments); $i++) { 
-                                            echo "- $comments[$i] <br>";
+                                            echo "<small>- $comments[$i]</small> <br>";
                                         }
 
+                                    }else{
+                                        echo "<small>N/A</small>";
                                     }
                                 
                                 ?></td>
@@ -643,9 +645,11 @@
                                         $comments = explode(';;',$services_internalRow['comments']);
 
                                         for ($i=0; $i < sizeof($comments); $i++) { 
-                                            echo "- $comments[$i] <br>";
+                                            echo "<small>- $comments[$i]</small> <br>";
                                         }
 
+                                    }else{
+                                        echo "<small>N/A</small>";
                                     }
                                 
                                 ?></td>
